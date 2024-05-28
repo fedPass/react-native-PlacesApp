@@ -2,7 +2,7 @@ import {FlatList, StyleSheet, Text, View} from 'react-native';
 import PlaceItem from './PlaceItem';
 
 export default function PlacesList({places}: any) {
-  if (!places || !places.length) {
+  if (!places || places.length === 0) {
     return (
       <View style={styles.fallBckContainer}>
         <Text style={styles.fallbckText}>
@@ -14,7 +14,7 @@ export default function PlacesList({places}: any) {
   return (
     <FlatList
       data={places}
-      keyExtractor={item => item.id}
+      keyExtractor={(item) => item.id}
       renderItem={({item}) => <PlaceItem place={item}/>}
     />
   );
@@ -28,6 +28,6 @@ const styles = StyleSheet.create({
   },
   fallbckText: {
     fontSize: 16,
-    color: '#5CA891'
+    color: '#259C78'
   }
 })
