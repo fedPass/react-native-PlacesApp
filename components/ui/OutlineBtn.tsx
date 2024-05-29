@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text } from "react-native";
-import Icon from "react-native-vector-icons/AntDesign";
+import Icon from "react-native-vector-icons/FontAwesome";
 import { GlobalColors } from "../../constants/colors";
 
 export default function OutlineBtn({icon, text, onPress}: any) {

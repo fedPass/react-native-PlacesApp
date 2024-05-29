@@ -2,16 +2,18 @@ import { useState } from "react";
 import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { GlobalColors } from "../../constants/colors";
 import ImagePicker from "./ImagePicker";
+import LocationPicker from "./LocationPicker";
 
 export default function PlaceForm() {
   const [enteredTitle, setEnteredTitle] = useState('');
   return (
-    <ScrollView style={styles.form}>
+    <ScrollView style={styles.form} overScrollMode="never">
       <View>
         <Text style={styles.label}>Titolo</Text>
         <TextInput style={styles.input} onChangeText={(text) => setEnteredTitle(text)} value={enteredTitle} />
       </View>
       <ImagePicker />
+      <LocationPicker />
     </ScrollView>
   )
 }
