@@ -54,5 +54,10 @@
 	<!-- added camera-roll permission -->
 	<key>NSPhotoLibraryUsageDescription</key>
 <string>$(PRODUCT_NAME) needs access to your Photo Gallery.</string>
+<!-- added location permission -->
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>$(PRODUCT_NAME) needs access to your position.</string>
+<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+<string>$(PRODUCT_NAME) needs access to your position.</string>
 </dict>
 </plist>

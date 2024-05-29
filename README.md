@@ -86,3 +86,54 @@ Open your project's Info.plist and add the following lines inside the outermost 
 
 ```
 
+## Install geolocation
+https://github.com/michalchudziak/react-native-geolocation
+Example: https://github.com/michalchudziak/react-native-geolocation/tree/master/example
+
+```bash
+npm install @react-native-community/geolocation --save
+
+```
+
+Updating manifests:
+
+### For Android
+
+Open AndroidManifest.xml:
+
+```bash
+<manifest>
+...
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+...
+<application>
+
+```
+
+or 
+
+```bash
+<manifest>
+...
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+...
+<application>
+```
+
+Android API >= 18 Positions will also contain a mocked boolean to indicate if position was created from a mock provider.
+
+Android API >= 23 Requires an additional step to check for, and request the ACCESS_FINE_LOCATION or ACCESS_COARSE_LOCATION permissions using the PermissionsAndroid API. Failure to do so may result in a hard crash.
+
+
+### For iOS
+
+Open your project's Info.plist and add the following lines inside the outermost <dict> tag:
+
+```bash
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>$(PRODUCT_NAME) needs access to your position.</string>
+<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+<string>$(PRODUCT_NAME) needs access to your position.</string>
+
+```
+
