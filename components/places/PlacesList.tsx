@@ -2,6 +2,7 @@ import {Button, FlatList, StyleSheet, Text, View} from 'react-native';
 import PlaceItem from './PlaceItem';
 import IconBtn from '../ui/IconBtn';
 import {useNavigation} from '@react-navigation/native';
+import { GlobalColors } from '../../constants/colors';
 
 export default function PlacesList({places}: any) {
   const navigation = useNavigation();
@@ -15,7 +16,7 @@ export default function PlacesList({places}: any) {
         <Button
           title="Aggiungi Place"
           onPress={() => navigation.navigate('AddPlace')}
-          color={'#188F89'}></Button>
+          color={GlobalColors.primary700}></Button>
       </View>
     );
   }
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
   },
   fallbckText: {
     fontSize: 16,
-    color: '#259C78',
+    color: GlobalColors.primary200,
     marginBottom: 12
   },
 });

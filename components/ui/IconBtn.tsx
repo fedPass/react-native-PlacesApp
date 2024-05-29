@@ -18,7 +18,7 @@ export default function IconBtn({name, onPress, size, color, bkgColor}: any) {
 const styles = StyleSheet.create({
   button: {
     padding: 8,
-    margin: 4,
+    // margin: 4,
     justifyContent: 'center',
     alignItems: 'center',
   },
