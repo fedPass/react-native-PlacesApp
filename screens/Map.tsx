@@ -1,11 +1,12 @@
 // TODO: npm install react-native-maps
 
-import {useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {useCallback, useEffect, useLayoutEffect, useState} from 'react';
+import {Alert, StyleSheet, Text, View} from 'react-native';
 import {GlobalColors} from '../constants/colors';
+import IconBtn from '../components/ui/IconBtn';
 
 // https://github.com/react-native-maps/react-native-maps
-export default function Map() {
+export default function Map({navigation}: any) {
   const [selectedLocation, setSelectedLocation] = useState<{
     latitude: number;
     longitude: number;
@@ -21,6 +22,35 @@ export default function Map() {
   const onSelectLocation = ({coordinate}: any) => {
     setSelectedLocation({latitude: coordinate.lat, longitude: coordinate.lon});
   };
+
+  // we use useCallback() to avoid that function inside component is not recreated unnecessary
+  // first parm is the function, second in dependency array
+  // function will be recreated only if change navigation prop or selectedLocation state
+  const savePickedLocation = useCallback(() => {
+    if (!selectedLocation) {
+      Alert.alert(
+        'Nessuna località selezionata',
+        'Devi selezionare una località facendo tap sulla mappa',
+      );
+      return;
+    }
+    navigation.navigate('AddPlace', {pickedLocation: selectedLocation});
+  }, [navigation, selectedLocation]);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: ({tintColor}) => (
+        <IconBtn
+          name="save"
+          size={24}
+          color={tintColor}
+          onPress={savePickedLocation}
+          bkgColor={GlobalColors.primary700}
+        />
+      ),
+    });
+    // passing a funct into dependencies array we need to use useCallback hooks inside this funtion
+  },[navigation, savePickedLocation]);
 
   return (
     // <MapView style={{flex: 1}} initialRegion={region} onPress={onSelectLocation}>
