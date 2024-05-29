@@ -2,9 +2,9 @@ import { Pressable, StyleSheet, Text } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { GlobalColors } from "../../constants/colors";
 
-export default function OutlineBtn({icon, text, onPress}: any) {
+export default function OutlineBtn({icon, text, onPress, disabled}: any) {
   return (
-    <Pressable onPress={onPress} style={({ pressed }) => [styles.button, pressed && styles.pressed]}>
+    <Pressable disabled={disabled} onPress={onPress} style={({ pressed }) => [styles.button, pressed && styles.pressed, disabled && styles.disabled]}>
       <Icon style={styles.icon} name={icon} size={18} color={GlobalColors.primary500} />
       <Text style={styles.text}>{text}</Text>
     </Pressable>
@@ -33,4 +33,7 @@ const styles = StyleSheet.create({
     color: GlobalColors.primary500,
     fontWeight: 'bold'
   },
+  disabled: {
+    opacity: 0.4
+  }
 })

@@ -4,10 +4,12 @@ import { GlobalColors } from "../../constants/colors";
 import Geolocation from '@react-native-community/geolocation';
 import { useState } from "react";
 import { getMapPreview } from "../../util/location";
+import { useNavigation } from "@react-navigation/native";
 
 
 export default function LocationPicker() {
   const [pickedLocation, setPickedLocation] = useState<{lat:string; lon: string} | undefined>();
+  const navigation = useNavigation();
 
   const onGetCurrentLocation = () => {
     Geolocation.getCurrentPosition(position => setPickedLocation({
@@ -15,7 +17,9 @@ export default function LocationPicker() {
       lon: position.coords.longitude.toString()
     }));
   };
-  const onMapLocation = () => {};
+  const onMapLocation = () => {
+    navigation.navigate('Map');
+  };
 
   let mapPreview = <Text>Non hai ancora inserito una posizione per questo Place</Text>
   if (pickedLocation) {

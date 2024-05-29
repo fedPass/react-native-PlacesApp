@@ -8,6 +8,7 @@ import AllPlaces from './screens/AllPlaces';
 import AddPlace from './screens/AddPlace';
 import IconBtn from './components/ui/IconBtn';
 import {GlobalColors} from './constants/colors';
+import Map from './screens/Map';
 
 const Stack = createNativeStackNavigator();
 
@@ -55,6 +56,11 @@ function App(): React.JSX.Element {
             name="AddPlace"
             component={AddPlace}
             options={{title: 'Aggiungi nuovo Place'}}
+          />
+          <Stack.Screen
+            name="Map"
+            component={Map}
+            options={{title: 'Seleziona un Place'}}
           />
         </Stack.Navigator>
       </NavigationContainer>
