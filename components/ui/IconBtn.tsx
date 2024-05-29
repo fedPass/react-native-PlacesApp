@@ -4,13 +4,13 @@ import Icon from 'react-native-vector-icons/AntDesign';
 export default function IconBtn({name, onPress, size, color, bkgColor}: any) {
   return (
     <Pressable
-      style={({pressed}) => [styles.button, pressed && styles.pressed]}
-      onPress={onPress}>
+      style={({pressed}) => [styles.button, pressed && styles.pressed]}>
       <Icon.Button
         name={name}
         backgroundColor={bkgColor ?? '#fff'}
         size={size}
-        color={color}></Icon.Button>
+        color={color}
+        onPress={onPress}></Icon.Button>
     </Pressable>
   );
 }

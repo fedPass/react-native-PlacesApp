@@ -1,7 +1,7 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import {StatusBar, StyleSheet, useColorScheme} from 'react-native';
+import {Alert, StatusBar, StyleSheet, useColorScheme} from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import AllPlaces from './screens/AllPlaces';
@@ -28,11 +28,11 @@ function App(): React.JSX.Element {
           <Stack.Screen
             name="AllPlaces"
             component={AllPlaces}
-            options={{
+            options={({navigation}) => ({
               headerRight: ({tintColor}) => (
-                <IconBtn color={tintColor} name="plus" onPress={() => {}} />
+                <IconBtn color={tintColor} size={24} name="plus" onPress={() => navigation.navigate('AddPlace')} />
               ),
-            }}
+            })}
           />
           <Stack.Screen name="AddPlace" component={AddPlace} />
         </Stack.Navigator>
