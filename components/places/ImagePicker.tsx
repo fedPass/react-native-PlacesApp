@@ -49,14 +49,18 @@ export default function ImagePicker() {
           Alert.alert('Modal has been closed.');
           setIsCameraVisible(!isCameraVisible);
         }}>
-        <Camera
-          style={styles.camera}
-          device={device}
-          ref={camera}
-          isActive
-          photo
-        />
-        <Button title="Scatta foto" onPress={onTakePhoto} />
+          <View style={{flex: 1, height: '100%'}}>
+            <Camera
+              style={styles.camera}
+              device={device}
+              ref={camera}
+              isActive
+              photo
+            />
+            <View style={styles.btn}>
+              <Button title="Scatta foto" onPress={onTakePhoto} />
+            </View>
+          </View>
       </Modal>
       {photoPath && <Image style={styles.image} source={{uri: photoPath}} />}
       <View style={styles.btn}>
@@ -75,7 +79,7 @@ const styles = StyleSheet.create({
   },
   camera: {
     height: 460,
-    width: '92%',
+    width: '100%',
     alignSelf: 'center',
   },
   btn: {
