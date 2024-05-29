@@ -1,25 +1,36 @@
-import { StyleSheet, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import OutlineBtn from "../ui/OutlineBtn";
 import { GlobalColors } from "../../constants/colors";
-import Geolocation, { GeolocationResponse } from '@react-native-community/geolocation';
+import Geolocation from '@react-native-community/geolocation';
 import { useState } from "react";
+import { getMapPreview } from "../../util/location";
 
 
 export default function LocationPicker() {
-  const [pickedLocation, setPickedLocation] = useState<{lat:number; lon: number} | undefined>();
+  const [pickedLocation, setPickedLocation] = useState<{lat:string; lon: string} | undefined>();
 
   const onGetCurrentLocation = () => {
     Geolocation.getCurrentPosition(position => setPickedLocation({
-      lat: position.coords.latitude,
-      lon: position.coords.longitude
+      lat: position.coords.latitude.toString(),
+      lon: position.coords.longitude.toString()
     }));
-    console.log('pickedLocation', pickedLocation);
   };
   const onMapLocation = () => {};
 
+  let mapPreview = <Text>Non hai ancora inserito una posizione per questo Place</Text>
+  if (pickedLocation) {
+    mapPreview = <Image source={{uri: getMapPreview(pickedLocation.lat, pickedLocation.lon)}} style={styles.map} />
+    mapPreview = <View>
+        <Text style={styles.titleCoords}>Coordinate Place</Text>
+        <Text>Latitudine: {pickedLocation.lat}</Text>
+        <Text>Longitudine: {pickedLocation.lon}</Text>
+      </View>
+  }
+
+
   return (
     <View>
-      <View style={styles.mapPreview}></View>
+      <View style={styles.mapPreview}>{mapPreview}</View>
       <View style={styles.btnBox}>
         <OutlineBtn text="Posizione attuale" icon="map-pin" onPress={onGetCurrentLocation} />
         <OutlineBtn text="Apri mappa" icon="map" onPress={onMapLocation} />
@@ -42,6 +53,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginBottom: 50
+  },
+  map: {
+    marginHorizontal: 16,
+    paddingTop: 8,
+    width: '100%',
+    height: '100%'
+  },
+  titleCoords: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center'
   }
 
 })

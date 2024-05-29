@@ -137,3 +137,5 @@ Open your project's Info.plist and add the following lines inside the outermost 
 
 ```
 
+## Install Google Map Static API maps
+#TODO: retry google api key to implement map
