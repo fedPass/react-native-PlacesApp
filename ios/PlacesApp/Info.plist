@@ -51,5 +51,8 @@
 	<!-- added camera permission -->
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) needs access to your Camera.</string>
+	<!-- added camera-roll permission -->
+	<key>NSPhotoLibraryUsageDescription</key>
+<string>$(PRODUCT_NAME) needs access to your Photo Gallery.</string>
 </dict>
 </plist>

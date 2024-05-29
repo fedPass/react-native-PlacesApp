@@ -48,3 +48,41 @@ Open your project's Info.plist and add the following lines inside the outermost 
 <string>$(PRODUCT_NAME) needs access to your Microphone.</string>
 ```
 
+
+## Install camera-roll
+https://github.com/react-native-cameraroll/react-native-cameraroll
+
+```bash
+npm install @react-native-camera-roll/camera-roll --save
+
+```
+
+Updating manifests:
+
+### For Android
+
+Open AndroidManifest.xml:
+
+```bash
+<manifest>
+...
+  <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+  <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+    android:maxSdkVersion="32" />
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+...
+<application>
+
+```
+
+### For iOS
+
+Open your project's Info.plist and add the following lines inside the outermost <dict> tag:
+
+```bash
+<key>NSPhotoLibraryUsageDescription</key>
+<string>$(PRODUCT_NAME) needs access to your Photo Gallery.</string>
+
+```
+
