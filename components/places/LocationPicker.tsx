@@ -2,14 +2,27 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import OutlineBtn from "../ui/OutlineBtn";
 import { GlobalColors } from "../../constants/colors";
 import Geolocation from '@react-native-community/geolocation';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getMapPreview } from "../../util/location";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 
 export default function LocationPicker() {
   const [pickedLocation, setPickedLocation] = useState<{lat:string; lon: string} | undefined>();
   const navigation = useNavigation();
+  const route = useRoute();
+
+  const mapLocationPicker = route.params && {
+    lat: route.params.pickedLocation.latitude.toString(),
+    lon: route.params.pickedLocation.longitude.toString()
+  }
+
+  //side-effect when mapLocationPiker change
+  useEffect(() => {
+    if (mapLocationPicker) {
+      setPickedLocation(mapLocationPicker)
+    }
+  }, [mapLocationPicker])
 
   const onGetCurrentLocation = () => {
     Geolocation.getCurrentPosition(position => setPickedLocation({
@@ -23,7 +36,7 @@ export default function LocationPicker() {
 
   let mapPreview = <Text>Non hai ancora inserito una posizione per questo Place</Text>
   if (pickedLocation) {
-    mapPreview = <Image source={{uri: getMapPreview(pickedLocation.lat, pickedLocation.lon)}} style={styles.map} />
+    // mapPreview = <Image source={{uri: getMapPreview(pickedLocation.lat, pickedLocation.lon)}} style={styles.map} />
     mapPreview = <View>
         <Text style={styles.titleCoords}>Coordinate Place</Text>
         <Text>Latitudine: {pickedLocation.lat}</Text>
