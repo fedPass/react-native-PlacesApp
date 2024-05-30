@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
-import { Button, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, Button, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { GlobalColors } from "../../constants/colors";
 import ImagePicker from "./ImagePicker";
 import LocationPicker from "./LocationPicker";
 import { convertCoordsToAddress } from "../../util/location";
+import { Place } from "../../models/place";
 
-export default function PlaceForm() {
+export default function PlaceForm({onCreatePlace}: any) {
   const [enteredTitle, setEnteredTitle] = useState('');
   const [selectedImage, setSelectedImage] = useState('');
   const [pickedLocation, setPickedLocation] = useState<{lat:string; lon: string} | undefined>();
@@ -18,21 +19,21 @@ export default function PlaceForm() {
   useEffect(() => {
     const fetchAddress = async () => {
       if (pickedLocation) {
-        const address = await convertCoordsToAddress(pickedLocation.lat, pickedLocation.lon);
-        setAddress(address);
+        try {
+          const address = await convertCoordsToAddress(pickedLocation.lat, pickedLocation.lon);
+          setAddress(address);
+        } catch (error) {
+          Alert.alert('Error', error)
+        }
       }
     };
     fetchAddress();
   }, [pickedLocation]);
 
   const onSubmitForm = () => {
-    console.log('---')
-    console.log(enteredTitle);
-    console.log(selectedImage);
-    console.log(pickedLocation);
-    console.log('address:', address);
-    console.log('---')
-
+    const placeData = new Place(enteredTitle, selectedImage, address, pickedLocation);
+    //pass data to the parent (AddPlace) calling onCreatePlace
+    onCreatePlace(placeData)
   }
   return (
     <ScrollView style={styles.form} overScrollMode="never">
