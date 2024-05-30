@@ -139,3 +139,20 @@ Open your project's Info.plist and add the following lines inside the outermost 
 
 ## Install Google Map Static API maps
 #TODO: retry google api key to implement map
+
+## Install SQLite
+https://www.npmjs.com/package/react-native-sqlite-storage
+https://blog.logrocket.com/using-sqlite-react-native/
+
+```bash
+npm install --save react-native-sqlite-storage
+npm install @types/react-native-sqlite-storage
+
+```
+
+### For iOS
+
+```bash
+cd ios && pod install && cd ..
+
+```
