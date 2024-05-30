@@ -7,7 +7,7 @@ import { getMapPreview } from "../../util/location";
 import { useNavigation, useRoute, useIsFocused } from "@react-navigation/native";
 
 
-export default function LocationPicker() {
+export default function LocationPicker({onPickLocation}: any) {
   const [pickedLocation, setPickedLocation] = useState<{lat:string; lon: string} | undefined>();
   const navigation = useNavigation();
   const route = useRoute();
@@ -24,9 +24,15 @@ export default function LocationPicker() {
         lat: route.params.pickedLocation.latitude.toString(),
         lon: route.params.pickedLocation.longitude.toString()
       }
-      setPickedLocation(mapLocationPicker)
+      setPickedLocation(mapLocationPicker);
     }
   }, [route, isFocused])
+
+  // second effect function to update onPickLocation (pass data to the parent component)
+  // we pass onPickLocation into dep array so we need to wrap this funct with useCallBack()
+  useEffect(() => {
+    onPickLocation(pickedLocation);
+  }, [pickedLocation, onPickLocation])
 
   const onGetCurrentLocation = () => {
     Geolocation.getCurrentPosition(position => setPickedLocation({
@@ -73,7 +79,7 @@ const styles = StyleSheet.create({
   btnBox: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginBottom: 50
+    marginBottom: 16
   },
   map: {
     marginHorizontal: 16,

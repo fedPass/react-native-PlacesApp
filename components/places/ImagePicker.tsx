@@ -8,7 +8,7 @@ import {
 import OutlineBtn from '../ui/OutlineBtn';
 import { GlobalColors } from '../../constants/colors';
 
-export default function ImagePicker() {
+export default function ImagePicker({onSelectImage}: any) {
   const device = useCameraDevice('back');
   const camera = useRef<Camera>(null);
   const [cameraPermission, setCameraPermission] = useState<CameraPermissionStatus | null>(null);
@@ -30,6 +30,7 @@ export default function ImagePicker() {
         // const result = await fetch(`file://${photo.path}`);
         // const data = await result.blob();
         setPhotoPath('file://' + photo.path);
+        onSelectImage('file://' + photo.path)
       }
     } catch (error) {
       console.error("Failed to take photo:", error);
