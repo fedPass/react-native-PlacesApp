@@ -18,8 +18,8 @@ export default function PlaceForm() {
   useEffect(() => {
     const fetchAddress = async () => {
       if (pickedLocation) {
-        const result = await convertCoordsToAddress(pickedLocation.lat, pickedLocation.lon);
-        setAddress(result);
+        const address = await convertCoordsToAddress(pickedLocation.lat, pickedLocation.lon);
+        setAddress(address);
       }
     };
     fetchAddress();

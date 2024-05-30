@@ -13,7 +13,7 @@ export function getMapPreview(lat: string, lon: string) {
 
 // Reverse Geocode (Convert coordinates to human-readable address):
 export async function convertCoordsToAddress(lat: string, lon: string) {
-  const addressUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=41.706952245110244&lon=15.7273764357258`
+  const addressUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
   const response = await axios.get(addressUrl);
   return response.data.display_name;
 }
