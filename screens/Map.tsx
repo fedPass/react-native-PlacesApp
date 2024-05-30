@@ -27,14 +27,21 @@ export default function Map({navigation}: any) {
   // first parm is the function, second in dependency array
   // function will be recreated only if change navigation prop or selectedLocation state
   const savePickedLocation = useCallback(() => {
-    if (!selectedLocation) {
-      Alert.alert(
-        'Nessuna località selezionata',
-        'Devi selezionare una località facendo tap sulla mappa',
-      );
-      return;
-    }
-    navigation.navigate('AddPlace', {pickedLocation: selectedLocation});
+    // TODO: to pass dinamically position
+    // if (!selectedLocation) {
+    //   Alert.alert(
+    //     'Nessuna località selezionata',
+    //     'Devi selezionare una località facendo tap sulla mappa',
+    //   );
+    //   return;
+    // }
+    // navigation.navigate('AddPlace', {pickedLocation: selectedLocation});
+    navigation.navigate('AddPlace', {pickedLocation: 
+      {
+      latitude: 37.78825,
+      longitude: -122.4324
+      }
+    });
   }, [navigation, selectedLocation]);
 
   useLayoutEffect(() => {

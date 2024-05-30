@@ -4,25 +4,29 @@ import { GlobalColors } from "../../constants/colors";
 import Geolocation from '@react-native-community/geolocation';
 import { useEffect, useState } from "react";
 import { getMapPreview } from "../../util/location";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute, useIsFocused } from "@react-navigation/native";
 
 
 export default function LocationPicker() {
   const [pickedLocation, setPickedLocation] = useState<{lat:string; lon: string} | undefined>();
   const navigation = useNavigation();
   const route = useRoute();
+  const isFocused = useIsFocused(); //true if screen is focused
 
-  const mapLocationPicker = route.params && {
-    lat: route.params.pickedLocation.latitude.toString(),
-    lon: route.params.pickedLocation.longitude.toString()
-  }
+  // when we go back to another screen (ex here from map) the component and its child is not recreated
+  // instead in stack navigation all screens is preserved
+  // for this reason effect function doesn't run again, we need to use useIsFocused
 
   //side-effect when mapLocationPiker change
   useEffect(() => {
-    if (mapLocationPicker) {
+    if (isFocused && route.params) {
+      const mapLocationPicker = {
+        lat: route.params.pickedLocation.latitude.toString(),
+        lon: route.params.pickedLocation.longitude.toString()
+      }
       setPickedLocation(mapLocationPicker)
     }
-  }, [mapLocationPicker])
+  }, [route, isFocused])
 
   const onGetCurrentLocation = () => {
     Geolocation.getCurrentPosition(position => setPickedLocation({
