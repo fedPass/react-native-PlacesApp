@@ -33,6 +33,7 @@ export default function PlaceForm({onCreatePlace}: any) {
   const onSubmitForm = () => {
     const placeData = new Place(enteredTitle, selectedImage, address, pickedLocation);
     //pass data to the parent (AddPlace) calling onCreatePlace
+    // TODO: form validation
     onCreatePlace(placeData)
   }
   return (
