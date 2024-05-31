@@ -55,7 +55,17 @@ export const getPlaceDetails = async (db: SQLiteDatabase, id: number) => {
   try {
     const results = await db.executeSql(`SELECT * FROM ${tableName} WHERE id = ?`, [id]);
     if (results[0].rows.length) {
-      const place = results[0].rows.item(0);
+      const placeDB = results[0].rows.item(0);
+      const place = new Place(
+        placeDB.title,
+        placeDB.imageUri,
+        placeDB.address,
+        {
+          lat: placeDB.lat,
+          lon: placeDB.lon,
+        },
+        placeDB.id
+      )
       return place;
     } else {
       console.log('No place found with the given id:', id);

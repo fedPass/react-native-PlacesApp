@@ -47,7 +47,7 @@ function App(): React.JSX.Element {
             headerStyle: {
               backgroundColor: GlobalColors.primary700,
             },
-            headerTintColor: GlobalColors.gray700,
+            headerTintColor: GlobalColors.primary50,
             contentStyle: {
               backgroundColor: GlobalColors.gray700,
             },
@@ -76,7 +76,7 @@ function App(): React.JSX.Element {
           <Stack.Screen
             name="Map"
             component={Map}
-            options={{title: 'Seleziona un Place'}}
+            options={{title: 'Mappa'}}
           />
           <Stack.Screen
             name="DetailsPlace"

@@ -6,20 +6,29 @@ import {GlobalColors} from '../constants/colors';
 import IconBtn from '../components/ui/IconBtn';
 
 // https://github.com/react-native-maps/react-native-maps
-export default function Map({navigation}: any) {
+export default function Map({navigation, route}: any) {
+
+  const initialLocation = route.params?.coords && {
+    latitude: route.params.coords.lat,
+    longitude: route.params.coords.lon
+  }
+
   const [selectedLocation, setSelectedLocation] = useState<{
     latitude: number;
     longitude: number;
-  }>();
+  }>(initialLocation);
 
+  // TODO: if exists route.params.coords then set as region prop
   const region = {
-    latitude: 37.78825,
-    longitude: -122.4324,
+    latitude: initialLocation ? initialLocation.latitude : 37.78825,
+    longitude: initialLocation ? initialLocation.longitude : -122.4324,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   };
 
   const onSelectLocation = ({coordinate}: any) => {
+    // to avoid move marker in PlaceDetails
+    if (initialLocation) return;
     setSelectedLocation({latitude: coordinate.lat, longitude: coordinate.lon});
   };
 
@@ -45,6 +54,7 @@ export default function Map({navigation}: any) {
   }, [navigation, selectedLocation]);
 
   useLayoutEffect(() => {
+    if (initialLocation) return;
     navigation.setOptions({
       headerRight: ({tintColor}) => (
         <IconBtn
@@ -57,7 +67,7 @@ export default function Map({navigation}: any) {
       ),
     });
     // passing a funct into dependencies array we need to use useCallback hooks inside this funtion
-  },[navigation, savePickedLocation]);
+  },[navigation, savePickedLocation, initialLocation]);
 
   return (
     // <MapView style={{flex: 1}} initialRegion={region} onPress={onSelectLocation}>
