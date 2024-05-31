@@ -1,8 +1,10 @@
 import {Alert, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {GlobalColors} from '../../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useNavigation } from '@react-navigation/native';
 
-export default function PlaceItem({place, onSelect}: any) {
+export default function PlaceItem({place}: any) {
+  const navigation = useNavigation();
     let imagePreview = <View style={[styles.noPhoto, styles.image]}>
       <Icon name="image" size={36} color={GlobalColors.primary100} />
     </View>
@@ -12,7 +14,7 @@ export default function PlaceItem({place, onSelect}: any) {
     return (
       <Pressable
         style={({pressed}) => [styles.container, pressed && styles.pressed]}
-        onPress={() => Alert.alert('click')}>
+        onPress={() => navigation.navigate('DetailsPlace', {place})}>
           {imagePreview}
         <View style={styles.textBox}>
           <Text style={styles.title}>{place.title}</Text>

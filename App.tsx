@@ -10,6 +10,7 @@ import IconBtn from './components/ui/IconBtn';
 import {GlobalColors} from './constants/colors';
 import Map from './screens/Map';
 import { createTable, getDBConnection } from './util/db-service';
+import PlaceDetails from './screens/PlaceDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -76,6 +77,10 @@ function App(): React.JSX.Element {
             name="Map"
             component={Map}
             options={{title: 'Seleziona un Place'}}
+          />
+          <Stack.Screen
+            name="DetailsPlace"
+            component={PlaceDetails}
           />
         </Stack.Navigator>
       </NavigationContainer>
