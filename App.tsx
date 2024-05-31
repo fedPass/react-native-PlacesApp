@@ -1,7 +1,7 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React, { useCallback, useEffect, useState } from 'react';
-import {Alert, StatusBar, StyleSheet, useColorScheme} from 'react-native';
+import {StatusBar, StyleSheet, useColorScheme} from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import AllPlaces from './screens/AllPlaces';
@@ -9,8 +9,7 @@ import AddPlace from './screens/AddPlace';
 import IconBtn from './components/ui/IconBtn';
 import {GlobalColors} from './constants/colors';
 import Map from './screens/Map';
-import { createTable, getDBConnection, getPlaces, savePlace } from './util/db-service';
-import { Place } from './models/place';
+import { createTable, getDBConnection } from './util/db-service';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,15 +21,10 @@ function App(): React.JSX.Element {
   };
 
   // initialize db
-  const [places, setPlaces] = useState<Place[]>([]);
   const loadDataCallback = useCallback(async () => {
     try {
       const db = await getDBConnection();
       await createTable(db);
-      const storedPlaces = await getPlaces(db);
-      if (storedPlaces.length) {
-        setPlaces(storedPlaces);
-      }
     } catch (error) {
       console.error(error);
     }
