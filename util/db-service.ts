@@ -32,7 +32,17 @@ export const getPlaces = async (db: SQLiteDatabase): Promise<Place[]> => {
     const results = await db.executeSql(`SELECT * FROM ${tableName}`);
     results.forEach(result => {
       for (let index = 0; index < result.rows.length; index++) {
-        places.push(result.rows.item(index))
+        // places.push(result.rows.item(index))
+        places.push(new Place(
+          result.rows.item(index).title,
+          result.rows.item(index).imageUri,
+          result.rows.item(index).address,
+          {
+            lat: result.rows.item(index).lat,
+            lon: result.rows.item(index).lon,
+          },
+          result.rows.item(index).id
+        ))
       }
     });
     return places;
