@@ -47,9 +47,24 @@ export const getPlaces = async (db: SQLiteDatabase): Promise<Place[]> => {
     });
     return places;
   } catch (error) {
-    Alert.alert('Errore recupero Places',error);
+    Alert.alert('Errore recupero Places',error.message);
   }
 };
+
+export const getPlaceDetails = async (db: SQLiteDatabase, id: number) => {
+  try {
+    const results = await db.executeSql(`SELECT * FROM ${tableName} WHERE id = ?`, [id]);
+    if (results[0].rows.length) {
+      const place = results[0].rows.item(0);
+      return place;
+    } else {
+      console.log('No place found with the given id:', id);
+      return null;
+    }
+  } catch (error) {
+    Alert.alert('Errore recupero Places', error.message);
+  }
+}
 
 export const savePlace = async (db: SQLiteDatabase, place: Place) => {
   const insertQuery =
@@ -64,7 +79,7 @@ export const savePlace = async (db: SQLiteDatabase, place: Place) => {
       ]);
       Alert.alert('Salvataggio effettuato', 'Place salvato con successo');
     } catch (error) {
-      Alert.alert('Errore salvataggio place: ', error);
+      Alert.alert('Errore salvataggio place: ', error.message);
     }
 };
 

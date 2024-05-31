@@ -12,7 +12,7 @@ export default function AddPlace({navigation}: any) {
       await savePlace(db, place)
       navigation.navigate('AllPlaces')
     } catch (error) {
-      Alert.alert('Error', error)
+      Alert.alert('Error', error.message)
     }
   }
 

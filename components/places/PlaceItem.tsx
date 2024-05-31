@@ -14,7 +14,7 @@ export default function PlaceItem({place}: any) {
     return (
       <Pressable
         style={({pressed}) => [styles.container, pressed && styles.pressed]}
-        onPress={() => navigation.navigate('DetailsPlace', {place})}>
+        onPress={() => navigation.navigate('DetailsPlace', {placeId: place.id})}>
           {imagePreview}
         <View style={styles.textBox}>
           <Text style={styles.title}>{place.title}</Text>

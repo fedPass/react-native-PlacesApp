@@ -23,7 +23,7 @@ export default function PlaceForm({onCreatePlace}: any) {
           const address = await convertCoordsToAddress(pickedLocation.lat, pickedLocation.lon);
           setAddress(address);
         } catch (error) {
-          Alert.alert('Error', error)
+          Alert.alert('Error', error.message)
         }
       }
     };

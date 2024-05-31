@@ -2,15 +2,28 @@ import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {GlobalColors} from '../constants/colors';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import OutlineBtn from '../components/ui/OutlineBtn';
-import { useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
+import { Place } from '../models/place';
+import { getDBConnection, getPlaceDetails } from '../util/db-service';
 
 export default function PlaceDetails({navigation, route}: any) {
-  const place = route.params.place;
+  const placeId = route.params.placeId;
+  const [place, setPlace] = useState<Place | null>() 
+
+  useLayoutEffect(() => {
+    const loadPlaceDetails = async () => {
+      const db = await getDBConnection();
+      const placeDetails = await getPlaceDetails(db, placeId);
+      setPlace(placeDetails);
+    }
+    loadPlaceDetails();
+  }, [placeId]);
+
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: place.title,
+      title: place?.title,
     });
-  }, [navigation]);
+  }, [navigation, place]);
 
   let imagePreview = (
     <View style={[styles.noPhoto, styles.image]}>
@@ -18,21 +31,21 @@ export default function PlaceDetails({navigation, route}: any) {
     </View>
   );
   
-  if (place.imageUri.length) {
+  if (place?.imageUri?.length) {
     imagePreview = (
-      <Image style={styles.image} source={{uri: place.imageUri}} />
+      <Image style={styles.image} source={{uri: place?.imageUri}} />
     );
   }
 
   return (
     <ScrollView style={styles.container}>
       {imagePreview}
-      <Text style={styles.text}>{place.address}</Text>
+      <Text style={styles.text}>{place?.address}</Text>
       <OutlineBtn
         icon="map"
         text="Vedi sulla mappa"
         onPress={() =>
-          navigation.navigate('Map', {coords: {lat: place.lat, lon: place.lon}})
+          navigation.navigate('Map', {coords: {lat: place?.coords.lat, lon: place?.coords.lon}})
         }
       />
     </ScrollView>
